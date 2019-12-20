@@ -13,6 +13,7 @@ export default function useFetchBox(id, newFile) {
 
             try {
                 const result = await api.get(`boxes/${id}`);
+               
                 dispatch({
                     type: 'FETCH_SUCCESS',
                     payload: result.data

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
 import api from '../../services/api';
@@ -10,6 +10,15 @@ import logo from '../../assets/logo.svg';
 export default function Main() {
     const history = useHistory();
     const [newBox, setNewBox] = useState('');
+    const [boxes, setBoxes] = useState([]);
+
+    useEffect(() => {
+        const fetchBoxes = async () => {
+            const boxes = await api.get('boxes');
+            setBoxes(boxes.data);
+        }
+        fetchBoxes();
+    }, [])
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -18,6 +27,10 @@ export default function Main() {
             title: newBox
         });
         history.push(`/box/${box.data._id}`);
+    }
+
+    function handleSelectBox(box) {
+        history.push(`/box/${box._id}`);
     }
 
     return (
@@ -31,6 +44,13 @@ export default function Main() {
                 />
                 <button type="submit">Criar</button>
             </form>
+            <div id="list-container">
+                {boxes && boxes.map(box => (
+                    <div onClick={() => handleSelectBox(box)} key={box._id}>
+                        <span>{box.title}</span>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

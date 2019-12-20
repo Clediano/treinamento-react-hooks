@@ -26,7 +26,9 @@ export function reducer(state, action) {
         }
         case 'FETCH_FAILURE': {
             return {
-                data: {},
+                data: {
+                    files: []
+                },
                 isLoading: false,
                 isError: true
             }

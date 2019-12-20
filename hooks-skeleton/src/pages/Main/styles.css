@@ -1,19 +1,46 @@
 #main-container {
     height: -webkit-fill-available;
-    
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+#list-container {
+    display: flex;
+    margin-top: 100px;
+    width: 1000px;
+    flex-wrap: wrap;
+}
+
+#list-container div{
+    height: 100px;
+    width: 200px;
+    padding: 10px;
+    margin: 20px;
+    border-radius: 15px;
+    border: 1px solid #7159c1;
+}
+
+#list-container :hover{
+    cursor: pointer;
+}
+
+#list-container div span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
 }
 
 #main-container form {
     width: 300px;
-
     display: flex;
     flex-direction: column;
 }
 
-#main-container form input{
+#main-container form input {
     height: 48px;
     border: 1px solid #DDD;
     border-radius: 4px;

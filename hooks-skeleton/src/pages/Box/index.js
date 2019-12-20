@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useFetchBox from '../../components/useFetchBox';
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import socket from 'socket.io-client';
 import DropZone from 'react-dropzone';
@@ -9,6 +10,7 @@ import moment from 'moment';
 import 'moment/locale/pt-br';
 
 import { MdInsertDriveFile } from 'react-icons/md';
+import { FaArrowLeft } from 'react-icons/fa';
 
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
@@ -19,6 +21,7 @@ export default function Box() {
     const { id } = useParams();
     const [lastFile, setLastFile] = useState({});
     const state = useFetchBox(id, lastFile);
+    const history = useHistory();
 
     useEffect(() => {
         subscribeToNewFiles();
@@ -41,6 +44,9 @@ export default function Box() {
     const { data, isLoading, isError } = state;
     return (
         <div id="box-container">
+            <span onClick={() => history.push('/')}>
+                <FaArrowLeft size={24} />
+            </span>
             <header>
                 <img src={logo} alt="Logo da aplicação" />
                 <h1>{data && data.title}</h1>
@@ -55,10 +61,10 @@ export default function Box() {
                 )}
             </DropZone>
 
-            {isError && <div>Alguma coisa deu errado...</div>}
+            {isError && <div id="feedback">Ops, alguma coisa deu errado...</div>}
 
             {isLoading ? (
-                <div>Loading...</div>
+                <div id="feedback">Loading...</div>
             ) : (
                     <ul>
                         {data && data.files.map(file => (
